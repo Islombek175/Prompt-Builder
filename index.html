@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PTCF Prompt Builder</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			font-family: system-ui, sans-serif;
+			background: #F5F7FB;
+			color: #1A2240;
+			max-width: 720px;
+			margin: 40px auto;
+			padding: 0 16px;
+		}
+
+		h1 {
+			margin-bottom: 4px;
+		}
+
+		label {
+			display: block;
+			font-weight: 700;
+			margin: 16px 0 6px;
+		}
+
+		textarea,
+		select {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #CDD3DF;
+			border-radius: 10px;
+			font: inherit;
+		}
+
+		textarea {
+			min-height: 70px;
+		}
+
+		.row {
+			display: flex;
+			gap: 10px;
+			margin-top: 18px;
+		}
+
+		button {
+			padding: 12px 18px;
+			border: 0;
+			border-radius: 10px;
+			font-weight: 700;
+			cursor: pointer;
+			background: #8B4C9E;
+			color: #fff;
+		}
+
+		button.ikkinchi {
+			background: #0077B6;
+		}
+
+		pre {
+			background: #1A2240;
+			color: #E6EDF3;
+			padding: 16px;
+			border-radius: 12px;
+			white-space: pre-wrap;
+			min-height: 80px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>PTCF Prompt Builder</h1>
+	<p>Maydonlarni to'ldiring — prompt avtomatik yig'iladi.</p>
+	<label for="persona">P — Persona (AI kim?)</label>
+	<select id="persona">
+		<option>Sen tajribali UX dizaynersan.</option>
+		<option>Sen tajribali front-end dasturchisan.</option>
+		<option>Sen sabrli o'qituvchisan, 11-sinf o'quvchisiga tushuntirasan.</option>
+		<option>Sen marketing va kopirayting mutaxassisisan.</option>
+	</select>
+	<label for="task">T — Task (nima qilsin?)</label>
+	<textarea id="task" placeholder="Masalan: bron formasini tahlil qil"></textarea>
+	<label for="context">C — Context (vaziyat, auditoriya, cheklovlar)</label>
+	<textarea id="context" placeholder="Masalan: foydalanuvchilar xorijlik
+turistlar..."></textarea>
+	<label for="format">F — Format (javob ko'rinishi)</label>
+	<textarea id="format" placeholder="Masalan: jadval, 5 qator, o'zbek tilida">
+</textarea>
+	<div class="row">
+		<button id="yigish">Promptni yig'ish</button>
+		<button id="nusxa" class="ikkinchi">Nusxa olish</button>
+	</div>
+	ITXiva · 11-sinf · Advanced UX/UI va Front-end
+	Muhammad al-Xorazmiy vorislari 3 / 4
+	<pre id="natija">Bu yerda tayyor prompt chiqadi...</pre>
+	<script>
+		function qiymat(id) {
+			return document.getElementById(id).value.trim();
+		}
+		function yigish() {
+			const qismlar = [
+				qiymat("persona"),
+				"Vazifa: " + qiymat("task"),
+				"Kontekst: " + qiymat("context"),
+				"Format: " + qiymat("format"),
+				"Agar ma'lumot yetmasa, boshlashdan oldin menga savol ber."
+			];
+			document.getElementById("natija").textContent = qismlar.join("\n");
+		}
+		document.getElementById("yigish").addEventListener("click", yigish);
+		document.getElementById("nusxa").addEventListener("click", function () {
+			const matn = document.getElementById("natija").textContent;
+			navigator.clipboard.writeText(matn);
+			this.textContent = "Nusxa olindi ✓";
+			setTimeout(() => (this.textContent = "Nusxa olish"), 1500);
+		});
+	</script>
+</body>
+
+</html>
